@@ -1,5 +1,20 @@
 import { FilterProps } from '@/types';
 
+export const calculateCarRent = (city_mpg: number, year: number) => {
+  const basePricePerDay = 50; // Base rental price per day in dollars
+  const mileageFactor = 0.1; // Additional rate per mile driven
+  const ageFactor = 0.05; // Additional rate per year of vehicle age
+
+  // Calculate additional rate based on mileage and age
+  const mileageRate = city_mpg * mileageFactor;
+  const ageRate = (new Date().getFullYear() - year) * ageFactor;
+
+  // Calculate total rental rate per day
+  const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
+
+  return rentalRatePerDay.toFixed(0);
+};
+
 export const updateSearchParams = (type: string, value: string) => {
   // Get the current URL search params
   const searchParams = new URLSearchParams(window.location.search);
@@ -33,7 +48,8 @@ export async function fetchCars(filters: FilterProps) {
 
   // Set the required headers for the API request
   const headers: HeadersInit = {
-    'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY || '',
+    'X-RapidAPI-Key':
+      '73342c306amshfa9f756f721a2d1p1ef8fejsn4abf64d9c783' || '',
     'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
   };
 
